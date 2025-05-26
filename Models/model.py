@@ -8,6 +8,7 @@ class Usuario(db.Model):
     correo_usuario = db.Column(db.String(150), nullable=False)
     contraseña_usuario = db.Column(db.String(130), nullable=False)
     fcreacion_usuario = db.Column(db.DateTime, default=datetime.utcnow)
+    
 class Cotizaciones(db.Model):
     __tablename__ = 'cotizacion'
     id_cotizacion = db.Column(db.Integer, primary_key=True,autoincrement=True)

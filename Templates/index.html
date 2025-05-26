@@ -13,6 +13,9 @@
         <div class="modal">
             <h2>Ingreso Administrativos</h2>
             <h4>Bienvenido: {{ correo }}</h4><br>
+            {% if mensaje%}
+            <p style="color: rgb(255, 30, 0);">{{ mensaje }}</p>
+            {% endif %}
             <form action="/enviar_datos" method="POST">
                 <div class="input-group">
                     <label for="nombre">Nombre completo del cliente</label>
@@ -50,12 +53,12 @@
                     <label for="descripcion">Descripcion</label>
                     <div class="input-wrapper">
                         <i class='bx bx-lock'></i>
-                        <input type="text id="descripcion" name="descripcion">
+                        <input type="text id=" descripcion" name="descripcion">
                     </div>
                 </div>
                 <button type="submit">Generar cotizacion</button>
             </form>
-            <li><a class="dropdown-item" href="{{ url_for('logout') }}">Cerrar Sesion</a></li>
+            <a class="dropdown-item" href="{{ url_for('logout') }}">Cerrar Sesion</a>
         </div>
     </div>
 </body>

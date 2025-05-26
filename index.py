@@ -2,6 +2,7 @@
 from flask import Flask,render_template,redirect,request,jsonify,url_for,session
 from Settings.setting import get_sqlalchemy_uri,test_pyodbc_connection
 from Models.model import Cotizaciones
+from Controllers.ct_controlers import usuario_registrado
 from datetime import datetime
 #a
 import openai
@@ -58,22 +59,35 @@ def enviar_datos():
     if request.method == 'POST':
         nombre = request.form['nombre']
         correo = request.form['correo']
-        tservicio = request.form['tservicio']
+        tservicio = request.form.get('tservicio', '').strip()
         descripcion = request.form['descripcion']
-        #resultado_ia = analizar_con_ia(descripcion, tservicio)
 
+        # Crear objeto para validación
+        obj_temp = Cotizaciones(
+            nombrecliente_cotizacion=nombre,
+            correocliente_cotizacion=correo,
+            tservicio_cotizacion=tservicio
+        )
+
+        # Validar
+        mensaje = usuario_registrado(obj_temp)
+        if mensaje != "usuario creado exitosamente":
+            return render_template('index.html',mensaje=mensaje)
+
+        # Obtener precio según tipo de servicio
         precios = {
             '1': 1500,
             '2': 2000,
             '3': 800
         }
         precio = precios.get(tservicio)
-        # if not resultado_ia or "error" in resultado_ia:
-        #     return jsonify({"error": resultado_ia.get("error", "Error desconocido")})
         if not precio:
             return jsonify({"error": "Tipo de servicio inválido"}), 400
+
+        # Generar número de cotización
         total = Cotizaciones.query.count() + 1
         numero_formateado = f"COT-2025-{str(total).zfill(4)}"
+
         nueva_cotizacion = Cotizaciones(
             numero_cotizacion=numero_formateado,
             nombrecliente_cotizacion=nombre,
@@ -82,18 +96,14 @@ def enviar_datos():
             precio_cotizacion=precio,
             fcreacion_cotizacion=datetime.utcnow()
         )
+
+        # Guardar en la base de datos
         db.session.add(nueva_cotizacion)
         db.session.commit()
 
-        return jsonify({
-            "codigo_cotizacion": numero_formateado,
-            "nombre": nombre,
-            "correo": correo,
-            "tipo_servicio": tservicio,
-            "precio": precio,
-            "descripciom":descripcion,
-            "fecha_creacion": nueva_cotizacion.fcreacion_cotizacion.strftime("%Y-%m-%d %H:%M:%S")
-        })
+        mensaje_bueno = "Felicidades, usuario creado exitosamente"
+        return render_template('index.html', mensaje=mensaje_bueno)
+
     return render_template('index.html')    
 
 
