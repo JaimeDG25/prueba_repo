@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css')}}">
+</head>
+
+<body>
+    <div class="overlay">
+        <div class="modal">
+            <h2>Ingreso Administrativos</h2>
+            <h4>Bienvenido: {{ correo }}</h4><br>
+            <form action="/enviar_datos" method="POST">
+                <div class="input-group">
+                    <label for="nombre">Nombre completo del cliente</label>
+                    <div class="input-wrapper">
+                        <i class='bx bx-user'></i>
+                        <input type="text" id="nombre" name="nombre">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="correo">Correo</label>
+                    <div class="input-wrapper">
+                        <i class='bx bx-user'></i>
+                        <input type="text" id="correo" name="correo">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="contraseña">Contraseña</label>
+                    <div class="input-wrapper">
+                        <i class='bx bx-lock'></i>
+                        <input type="password" id="contraseña" name="contraseña">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="contraseña">Tipo de servicio</label>
+                    <div class="input-wrapper">
+                        <select id="categoria" name="tservicio" class="form-control">
+                            <option value="" selected disabled hidden>Selecciona una opción</option>
+                            <option value="1">Constitucion de empresa</option>
+                            <option value="2">Defensa Laboral</option>
+                            <option value="3">Consultoria tributaria</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="descripcion">Descripcion</label>
+                    <div class="input-wrapper">
+                        <i class='bx bx-lock'></i>
+                        <input type="text id="descripcion" name="descripcion">
+                    </div>
+                </div>
+                <button type="submit">Generar cotizacion</button>
+            </form>
+            <li><a class="dropdown-item" href="{{ url_for('logout') }}">Cerrar Sesion</a></li>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="{{ url_for('static', filename='js/index.js')}}"></script>
+
+</html>

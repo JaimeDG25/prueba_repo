@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css')}}">
+</head>
+
+<body>
+    <div class="overlay">
+        <div class="modal">
+            <h2>Ingreso Administrativos</h2>
+            <form action="/enviar_login" method="POST">
+                <div class="input-group">
+                    <label for="correo">Correo</label>
+                    <div class="input-wrapper">
+                        <i class='bx bx-user'></i>
+                        <input type="text" id="correo" name="correo">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="contraseña">Contraseña</label>
+                    <div class="input-wrapper">
+                        <i class='bx bx-lock'></i>
+                        <input type="password" id="contraseña" name="contraseña">
+                    </div>
+                </div>
+                <button type="submit">Enviar datos</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="{{ url_for('static', filename='js/index.js')}}"></script>
+
+</html>
